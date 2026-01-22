@@ -1,4 +1,9 @@
 #include <stddef.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+
+#include "pacmirror.h"
 
 // #define ADB
 // #define AMD
@@ -32,7 +37,7 @@
 #include "flags.h"
 
 // clang-format off
-const char *pacman[] = {
+char *pacman[] = {
         "adwaita-cursors adwaita-icon-theme", // Theme
         "base base-devel cryptsetup efibootmgr grub linux linux-firmware lld llvm lvm2 mesa xfsprogs", // Linux
         "bash bash-completion",
@@ -131,16 +136,33 @@ const char *pacman[] = {
         NULL,
 };
 
-const char *aur[] = {
-        "freetube-bin",
-        "lesspass",
-        // "pass-tomb",
-        // "steghide",
-        // "tomb",
-        "yay-bin",
-        adb(jmtpfs),
-        hyprland(wttrbar),
-        mail(mutt-wizard),
-        NULL,
-};
+// char *aur[] = {
+//         "freetube-bin",
+//         "lesspass",
+//         // "pass-tomb",
+//         // "steghide",
+//         // "tomb",
+//         "yay-bin",
+//         adb(jmtpfs),
+//         hyprland(wttrbar),
+//         mail(mutt-wizard),
+//         NULL,
+// };
 // clang-format on
+
+void init_aur(DynArray *aur) {
+        init_da(aur);
+        da_append(aur, "freetube-bin");
+        da_append(aur, "lesspass");
+        da_append(aur, "yay-bin");
+        da_append_null(aur);
+}
+
+int main(int argc, char **argv) {
+        DynArray aur = { 0 };
+        init_aur(&aur);
+        strcpy(AUR_HELPER, "yay");
+        pacmirror(pacman, aur.data, argc, argv);
+        da_free(aur);
+        free(aur.data);
+}
