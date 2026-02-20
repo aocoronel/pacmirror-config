@@ -36,8 +36,15 @@
 
 #include "flags.h"
 
+#define TMP
+
 // clang-format off
 char *pacman[] = {
+#ifdef TMP
+        "vivaldi",
+        "minizip",
+        "lsb-release",
+#endif
         "adwaita-cursors adwaita-icon-theme", // Theme
         "base base-devel cryptsetup efibootmgr grub linux linux-firmware lld llvm lvm2 mesa xfsprogs", // Linux
         "bash bash-completion",
@@ -53,7 +60,7 @@ char *pacman[] = {
         "libpulse pipewire pipewire-alsa pipewire-audio pipewire-jack pipewire-pulse gst-plugin-pipewire wireplumber", // Audio
         "mandoc man-pages", // Manpages
         "mpv", // Media Player
-        "neovim", // Text Editor
+        "neovim neovide", // Text Editor
         "nodejs npm", // JavaScript
         "pass pass-otp zbar oath-toolkit", // PasswordStore
         "prettier", // General formatter
@@ -71,10 +78,11 @@ char *pacman[] = {
         "yt-dlp python-mutagen",
         "zathura zathura-pdf-mupdf", // PDF Viewer
         "zsh",
+        "global",
         // "distrobox", // Use any distro in any distro
         // "go",
         // "polkit udiskie udisks2",
-        // "pystring python-beautifulsoup4 python-dateutil python-feedgen python-lxml python-mutagen python-pytz python-six",
+        "pystring python-beautifulsoup4 python-dateutil python-feedgen python-lxml python-mutagen python-pytz python-six",
         // "rclone",
         // "ruby",
         // "wine",
@@ -123,13 +131,13 @@ char *pacman[] = {
         video_editor(shotcut sox),
         virtual_machine(bridge-utils dnsmasq dosfstools libvirt lxc qemu-full swtpm virt-manager virt-viewer),
         wayland(fuzzel pavucontrol swayimg swaybg cliphist xdg-user-dirs ydotool foot),
-        xorg(xwallpaper nsxiv zenity dconf dmenu picom redshift sxhkd xclip xdotool xorg-xinit xorg-xrandr xsel flameshot),
+        xorg(xwallpaper nsxiv zenity dconf dmenu picom redshift sxhkd xclip xdotool xorg-xinit xorg-xrandr xsel flameshot clipmenu),
         zig(zig zls),
 #ifdef WAYLAND
         screen_recorder(grim satty slurp wf-recorder),
 #endif
 #ifdef ARTIX
-        // "pandoc-bin",
+        "pandoc-bin",
 #else
         "pandoc-cli",
 #endif
@@ -155,6 +163,11 @@ void init_aur(DynArray *aur) {
         da_append(aur, "freetube-bin");
         da_append(aur, "lesspass");
         da_append(aur, "yay-bin");
+        da_append(aur, "gf2-git");
+#ifdef TMP
+        da_append(aur, "anydesk-bin");
+        da_append(aur, "yp-tools");
+#endif
         da_append_null(aur);
 }
 
