@@ -60,7 +60,7 @@ char *pacman[] = {
         "libpulse pipewire pipewire-alsa pipewire-audio pipewire-jack pipewire-pulse gst-plugin-pipewire wireplumber", // Audio
         "mandoc man-pages", // Manpages
         "mpv", // Media Player
-        "neovim neovide", // Text Editor
+        "neovim", // Text Editor
         "nodejs npm", // JavaScript
         "pass pass-otp zbar oath-toolkit", // PasswordStore
         "prettier", // General formatter
@@ -71,6 +71,8 @@ char *pacman[] = {
         "pcmanfm tumbler ffmpegthumbnailer",
         "shellcheck bash-language-server shfmt",
         "stylua",
+        "ntp ntp-dinit",
+        "tcc",
         "tar zip unzip",
         "tree less lsof moreutils wget which", // Great ones
         "ufw", // Firewall
