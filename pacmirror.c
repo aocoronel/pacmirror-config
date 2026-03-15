@@ -61,15 +61,15 @@ char *pacman[] = {
         "mandoc man-pages", // Manpages
         "mpv", // Media Player
         "neovim", // Text Editor
-        "nodejs npm", // JavaScript
+        // "nodejs npm", // JavaScript
         "pass pass-otp zbar oath-toolkit", // PasswordStore
-        "prettier", // General formatter
+        // "prettier", // General formatter
         "python imath",
         "restic", // Backups faster than borgbackup
         "rofi", // Dmenu from the future
         "rsync",
         "pcmanfm tumbler ffmpegthumbnailer",
-        "shellcheck bash-language-server shfmt",
+        "shellcheck shfmt", // bash-language-server
         "stylua",
         "ntp ntp-dinit",
         "tcc",
