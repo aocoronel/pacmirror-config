@@ -1,44 +1,45 @@
-#include <stddef.h>
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-
-#include "pacmirror.h"
-
-// #define ADB
-// #define AMD
 #define ARTIX
-// #define AUDIO_EDITOR
-// #define BLUETOOTH
 #define BROWSER
 #define C
+#define IMAGE_EDITOR
+#define INTEL
+#define NETWORK_MANAGER
+#define ODIN
+#define OFFICE
+#define PROPRIETARY
+#define RUST
+#define SCREEN_RECORDER
+#define VPN
+#define WINE
+#define XORG
+#define ZIG
+#define XLIBRE
+// #define ADB
+// #define AMD
+// #define AUDIO_EDITOR
+// #define BLUETOOTH
 // #define DOCKER
 // #define EMACS
 // #define FILE_MANAGER
 // #define HYPRLAND
-#define IMAGE_EDITOR
-#define INTEL
 // #define MAIL
-#define NETWORK_MANAGER
-#define OFFICE
 // #define PODMAN
 // #define RSS
-#define RUST
-#define SCREEN_RECORDER
 // #define STEAM
+// #define TMP
 // #define VIDEO_EDITOR
 // #define VIRTUAL_MACHINE
 // #define WAYLAND
-#define WINE
-#define XORG
-#define VPN
-#define ZIG
-#define ODIN
+
+// EOF DEFINES
 
 #include "flags.h"
 
-// #define TMP
-#define PROPRIETARY
+#include "pacmirror.h"
+#include <assert.h>
+#include <stddef.h>
+#include <string.h>
+#include <unistd.h>
 
 // clang-format off
 char *pacman[] = {
@@ -144,7 +145,6 @@ char *pacman[] = {
         zig(zig zls),
 #ifdef WAYLAND
         screen_recorder(grim satty slurp wf-recorder),
-#endif
 #endif
         NULL,
 };
