@@ -76,6 +76,7 @@ char *pacman[] = {
         // "shellcheck", // bash-language-server
         "shfmt", // shell formatter
         "stylua",
+        "pandoc-bin",
         "ntp ntp-dinit",
         "tcc",
         "tar zip unzip",
@@ -144,10 +145,6 @@ char *pacman[] = {
 #ifdef WAYLAND
         screen_recorder(grim satty slurp wf-recorder),
 #endif
-#ifdef ARTIX
-        "pandoc-bin",
-#else
-        "pandoc-cli",
 #endif
         NULL,
 };
