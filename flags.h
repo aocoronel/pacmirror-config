@@ -1,7 +1,13 @@
-#ifdef ARCH
-#define arch(...) #__VA_ARGS__
+#ifdef ODIN
+#define odin(...) #__VA_ARGS__
 #else
-#define arch(...) "0"
+#define odin(...) "0"
+#endif
+
+#ifdef VPN
+#define vpn(...) #__VA_ARGS__
+#else
+#define vpn(...) "0"
 #endif
 
 #ifdef ARTIX

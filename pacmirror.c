@@ -7,7 +7,6 @@
 
 // #define ADB
 // #define AMD
-#define ARCH
 #define ARTIX
 // #define AUDIO_EDITOR
 // #define BLUETOOTH
@@ -30,25 +29,30 @@
 // #define VIDEO_EDITOR
 // #define VIRTUAL_MACHINE
 // #define WAYLAND
-// #define WINE
+#define WINE
 #define XORG
-// #define ZIG
+#define VPN
+#define ZIG
+#define ODIN
 
 #include "flags.h"
 
-#define TMP
+// #define TMP
+#define PROPRIETARY
 
 // clang-format off
 char *pacman[] = {
 #ifdef TMP
-        "vivaldi",
-        "minizip",
+#endif
+#ifdef PROPRIETARY
+        "minizip", // for AnyDesk
         "lsb-release",
 #endif
         "adwaita-cursors adwaita-icon-theme", // Theme
         "base base-devel cryptsetup efibootmgr grub linux linux-firmware lld llvm lvm2 mesa xfsprogs", // Linux
         "bash bash-completion",
-        "bat eza fd sd btop ripgrep zoxide", // Better core-utils
+        "btop ripgrep zoxide", // Better core-utils
+        // "bat eza fd sd", // Better core-utils
         "cmus opusfile libmad libvorbis wavpack playerctl", // Music Player
         "curl ffmpeg jq imagemagick openssh openssl sqlite ueberzugpp", // Libraries...
         "dunst libnotify", // Notifications
@@ -69,7 +73,8 @@ char *pacman[] = {
         "rofi", // Dmenu from the future
         "rsync",
         "pcmanfm tumbler ffmpegthumbnailer",
-        "shellcheck shfmt", // bash-language-server
+        // "shellcheck", // bash-language-server
+        "shfmt", // shell formatter
         "stylua",
         "ntp ntp-dinit",
         "tcc",
@@ -87,19 +92,17 @@ char *pacman[] = {
         "pystring python-beautifulsoup4 python-dateutil python-feedgen python-lxml python-mutagen python-pytz python-six",
         // "rclone",
         // "ruby",
-        // "wine",
         // browser(qutebrowser),
         // screen_recorder(obs-studio),
         adb(android-tools gvfs gvfs-mtp mtpfs),
         amd(lib32-vulkan-radeon vulkan-radeon xf86-video-amdgpu),
-        arch(archlinux-keyring zram-generator pacman-contrib),
 #if !defined(ARTIX)
         "xf86-video-intel",
 #endif
         artix(
                artix-archlinux-support dinit elogind-dinit networkmanager-dinit opendoas
                pipewire-dinit pipewire-pulse-dinit turnstile turnstile-dinit wireplumber-dinit
-               wpa_supplicant-dinit
+               wpa_supplicant-dinit archlinux-keyring zram-generator pacman-contrib
         ),
         audio_editor(tenacity),
         bluetooth(bluez bluez-utils),
@@ -131,8 +134,11 @@ char *pacman[] = {
         rust(rustup rust-analyzer),
         steam(gamemode steam),
         video_editor(shotcut sox),
+        odin(odin),
         virtual_machine(bridge-utils dnsmasq dosfstools libvirt lxc qemu-full swtpm virt-manager virt-viewer),
         wayland(fuzzel pavucontrol swayimg swaybg cliphist xdg-user-dirs ydotool foot),
+        wine(wine),
+        vpn(wireguard-tools openresolv),
         xorg(xwallpaper nsxiv zenity dconf dmenu picom redshift sxhkd xclip xdotool xorg-xinit xorg-xrandr xsel flameshot clipmenu),
         zig(zig zls),
 #ifdef WAYLAND
@@ -166,7 +172,7 @@ void init_aur(DynArray *aur) {
         da_append(aur, "lesspass");
         da_append(aur, "yay-bin");
         da_append(aur, "gf2-git");
-#ifdef TMP
+#ifdef PROPRIETARY
         da_append(aur, "anydesk-bin");
         da_append(aur, "yp-tools");
 #endif
