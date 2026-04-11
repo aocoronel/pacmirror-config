@@ -28,14 +28,17 @@
 // === LANGUAGES ===
 #define C
 #define LUA
-#define ODIN
 #define PYTHON
-// #define RUBY
 #define SHELL
 #define ZIG
 // #define D
 // #define GO
+// #define HASKELL
 // #define JS
+// #define OCAML
+// #define OCAML
+// #define ODIN
+// #define RUBY
 // #define RUST
 
 // === TMP ===
@@ -60,7 +63,7 @@ char *pacman[] = {
         "artix-archlinux-support dinit elogind-dinit networkmanager-dinit opendoas",
         "pipewire-dinit pipewire-pulse-dinit turnstile turnstile-dinit wireplumber-dinit",
         "wpa_supplicant-dinit archlinux-keyring zram-generator pacman-contrib",
-        "ntp ntp-dinit",
+        "ntp ntp-dinit openssh-dinit",
 
         "base base-devel cryptsetup efibootmgr grub linux linux-firmware lld llvm lvm2 mesa xfsprogs",
 
@@ -99,7 +102,8 @@ char *pacman[] = {
         // "newsboat",
         // "podman podman-compose podman-docker",
         // "prettier",
-        // "ranger yazi",
+        "ranger",
+        // "yazi",
         // "rclone",
 
 #ifdef DESKTOP_MODE
@@ -155,12 +159,14 @@ char *pacman[] = {
         c(clang gcc gdb libtool make mold valgrind tcc), // meson cmake ninja lldb
         d(dmd dfmt),
         go(go),
+        haskell(ghc),
         js(nodejs npm),
+        lua(stylua),
+        ocaml(ocaml),
         odin(odin),
         ruby(ruby),
         rust(rustup rust-analyzer),
         shell(shfmt), // shellcheck
-        lua(stylua),
         zig(zig zls),
         python(
                 python imath
