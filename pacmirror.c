@@ -21,7 +21,7 @@
 
 // === SOFTWARE ===
 #define ANYDESK
-// #define EMACS
+#define EMACS
 // #define STEAM
 // #define VIRTUAL_MACHINE
 
@@ -116,7 +116,7 @@ char *pacman[] = {
         "pandoc-bin",
         "pcmanfm tumbler ffmpegthumbnailer",
         "rofi",
-        "thunderbird",
+        // "thunderbird",
         "wine",
         "wireguard-tools openresolv",
         "xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils",
