@@ -30,16 +30,15 @@
 #define LUA
 #define PYTHON
 #define SHELL
-#define ZIG
 // #define D
 // #define GO
 // #define HASKELL
 // #define JS
 // #define OCAML
-// #define OCAML
 // #define ODIN
 // #define RUBY
 // #define RUST
+// #define ZIG
 
 // === TMP ===
 // #define TMP
@@ -117,7 +116,7 @@ char *pacman[] = {
         "pcmanfm tumbler ffmpegthumbnailer",
         "rofi",
         // "thunderbird",
-        "wine",
+        // "wine",
         "wireguard-tools openresolv",
         "xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils",
         "yt-dlp python-mutagen",
@@ -163,7 +162,7 @@ char *pacman[] = {
         js(nodejs npm),
         lua(stylua),
         ocaml(ocaml),
-        odin(odin),
+        odin(odin odinfmt),
         ruby(ruby),
         rust(rustup rust-analyzer),
         shell(shfmt), // shellcheck
