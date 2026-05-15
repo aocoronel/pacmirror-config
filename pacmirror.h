@@ -15,33 +15,19 @@
 #define COLOR_BOLD "\x1b[1m"
 #define COLOR_RESET "\x1b[0m"
 
-#define da_append(da, name)                                     \
-    if (da->count >= da->cap) {                                 \
-        da->cap = da->cap == 0 ? 8 : da->cap * 2;               \
-        da->data = realloc(da->data, da->cap * sizeof(char *)); \
-    }                                                           \
-    da->data[da->count++] = strdup(name);
+#define da_append(da, name)                                           \
+    if ((da)->count >= (da)->cap) {                                   \
+        (da)->cap = (da)->cap == 0 ? 8 : (da)->cap * 2;               \
+        (da)->data = realloc((da)->data, (da)->cap * sizeof(char *)); \
+    }                                                                 \
+    (da)->data[(da)->count++] = strdup(name);
 
-#define da_append_l(da, name)                                \
-    if (da.count >= da.cap) {                                \
-        da.cap = da.cap == 0 ? 8 : da.cap * 2;               \
-        da.data = realloc(da.data, da.cap * sizeof(char *)); \
-    }                                                        \
-    da.data[da.count++] = strdup(name);
-
-#define da_append_null(da)                                      \
-    if (da->count >= da->cap) {                                 \
-        da->cap = da->cap == 0 ? 8 : da->cap * 2;               \
-        da->data = realloc(da->data, da->cap * sizeof(char *)); \
-    }                                                           \
-    da->data[da->count++] = NULL;
-
-#define da_append_null_l(da)                                 \
-    if (da.count >= da.cap) {                                \
-        da.cap = da.cap == 0 ? 8 : da.cap * 2;               \
-        da.data = realloc(da.data, da.cap * sizeof(char *)); \
-    }                                                        \
-    da.data[da.count++] = NULL;
+#define da_append_null(da)                                            \
+    if ((da)->count >= (da)->cap) {                                   \
+        (da)->cap = (da)->cap == 0 ? 8 : (da)->cap * 2;               \
+        (da)->data = realloc((da)->data, (da)->cap * sizeof(char *)); \
+    }                                                                 \
+    (da)->data[(da)->count++] = NULL;
 
 #define da_free(da)                         \
     for (size_t i = 0; i < da.count; i++) { \
@@ -55,12 +41,12 @@ typedef struct {
     size_t count;
     size_t cap;
     char **data;
-} DynArray;
+} PackageList;
 
 typedef struct {
-    DynArray pacman;
-    DynArray aur;
-    DynArray rm;
+    PackageList pacman;
+    PackageList aur;
+    PackageList rm;
 } Packages;
 
 static bool parse_args(int argc, char **argv) {
@@ -86,7 +72,7 @@ static bool parse_args(int argc, char **argv) {
     return true;
 }
 
-static void split_string_into_da(DynArray *da, const char *str) {
+static void split_string_into_da(PackageList *da, const char *str) {
     char *copy = strdup(str);
     char *token = strtok(copy, " ");
     while (token) {
@@ -99,7 +85,7 @@ static void split_string_into_da(DynArray *da, const char *str) {
 /*
  * Initialize a generic dynamic array
  */
-void init_da(DynArray *da) {
+void init_da(PackageList *da) {
     da->count = 0;
     da->cap = 16;
     da->data = malloc(da->cap * sizeof *da->data);
@@ -111,17 +97,17 @@ static Packages *init_packages(Packages *p, bool use_aur) {
 
     if (use_aur) {
         init_da(&p->aur);
-        da_append_l(p->aur, AUR_HELPER);
-        da_append_l(p->aur, "-S");
+        da_append(&p->aur, AUR_HELPER);
+        da_append(&p->aur, "-S");
     }
 
-    da_append_l(p->pacman, SUDO);
-    da_append_l(p->pacman, "pacman");
-    da_append_l(p->pacman, "-S");
+    da_append(&p->pacman, SUDO);
+    da_append(&p->pacman, "pacman");
+    da_append(&p->pacman, "-S");
 
-    da_append_l(p->rm, SUDO);
-    da_append_l(p->rm, "pacman");
-    da_append_l(p->rm, "-Rns");
+    da_append(&p->rm, SUDO);
+    da_append(&p->rm, "pacman");
+    da_append(&p->rm, "-Rns");
 
     return p;
 }
@@ -156,8 +142,8 @@ get_explicitly_installed_pkgs(Packages *packages, char **pacman, char **aur, boo
     init_packages(packages, use_aur);
 
     // pacman and aur static arrays:
-    DynArray pacman_config_pkgs = { 0, 0, NULL };
-    DynArray aur_config_pkgs = { 0, 0, NULL };
+    PackageList pacman_config_pkgs = { 0, 0, NULL };
+    PackageList aur_config_pkgs = { 0, 0, NULL };
 
     // "0" is ignored, so we can iterate till NULL instead
     if (use_aur) {
@@ -188,11 +174,17 @@ get_explicitly_installed_pkgs(Packages *packages, char **pacman, char **aur, boo
     // parsing the pacman.conf
 
     // Arch Linux
+#ifdef ARCH
     alpm_register_syncdb(handle, "core", 0);
     alpm_register_syncdb(handle, "extra", 0);
-    // alpm_register_syncdb(handle, "multilib", 0);
+
+#ifdef MULTILIB
+    alpm_register_syncdb(handle, "multilib", 0);
+#endif // MULTILIB
+#endif // ARCH
 
     // Artix Linux
+#ifdef ARTIX
     alpm_register_syncdb(handle, "galaxy", 0);
     alpm_register_syncdb(handle, "lib32", 0);
     alpm_register_syncdb(handle, "system", 0);
@@ -202,7 +194,8 @@ get_explicitly_installed_pkgs(Packages *packages, char **pacman, char **aur, boo
     alpm_register_syncdb(handle, "lib32-gremlins", 0);
     alpm_register_syncdb(handle, "system-gremlins", 0);
     alpm_register_syncdb(handle, "world-gremlins", 0);
-#endif
+#endif // ARTIX_GREMLINS
+#endif // ARTIX
 
     alpm_db_t *localdb = alpm_get_localdb(handle);
     alpm_list_t *list = alpm_db_get_pkgcache(localdb);
@@ -231,11 +224,11 @@ get_explicitly_installed_pkgs(Packages *packages, char **pacman, char **aur, boo
                 }
 
                 if (!found) {
-                    da_append_l(packages->rm, name);
+                    da_append(&packages->rm, name);
                 }
             } else {
                 // Remove all AUR packages
-                da_append_l(packages->rm, name);
+                da_append(&packages->rm, name);
             }
         } else { // Native
             for (size_t i = 0; i < pacman_config_pkgs.count; i++) {
@@ -248,7 +241,7 @@ get_explicitly_installed_pkgs(Packages *packages, char **pacman, char **aur, boo
             }
 
             if (!found) {
-                da_append_l(packages->rm, name);
+                da_append(&packages->rm, name);
             }
         }
     }
@@ -257,7 +250,7 @@ get_explicitly_installed_pkgs(Packages *packages, char **pacman, char **aur, boo
         for (size_t i = 0; i < aur_config_pkgs.count; i++) {
             const char *cfg = aur_config_pkgs.data[i];
             if (!is_installed(cfg, list)) {
-                da_append_l(packages->aur, cfg);
+                da_append(&packages->aur, cfg);
             }
         }
     }
@@ -265,7 +258,7 @@ get_explicitly_installed_pkgs(Packages *packages, char **pacman, char **aur, boo
     for (size_t i = 0; i < pacman_config_pkgs.count; i++) {
         const char *cfg = pacman_config_pkgs.data[i];
         if (!is_installed(cfg, list)) {
-            da_append_l(packages->pacman, cfg);
+            da_append(&packages->pacman, cfg);
         }
     }
 
@@ -276,14 +269,14 @@ get_explicitly_installed_pkgs(Packages *packages, char **pacman, char **aur, boo
     if (use_aur) {
         da_free(aur_config_pkgs);
         free(aur_config_pkgs.data);
-        da_append_null_l(packages->aur);
+        da_append_null(&packages->aur);
     }
 
     da_free(pacman_config_pkgs);
     free(pacman_config_pkgs.data);
 
-    da_append_null_l(packages->pacman);
-    da_append_null_l(packages->rm);
+    da_append_null(&packages->pacman);
+    da_append_null(&packages->rm);
 
     return true;
 }
@@ -340,7 +333,7 @@ static void synchronize_packages(Packages *pkgs, bool use_aur) {
     // 4 --> sudo pacman -Rns ... NULL
     if (pkgs->rm.count > 4) {
         printf("%sRemoving packages:%s %zu\n", COLOR_GREEN, COLOR_RESET, pkgs->rm.count - 4);
-        da_append_null_l(pkgs->rm);
+        da_append_null(&pkgs->rm);
         fork_exec(pkgs->rm.data);
     }
 
@@ -362,7 +355,7 @@ int pacmirror(char **pacman, char **aur, int argc, char **argv) {
     if (parse_args(argc, argv) == false) return 1;
 
     bool use_aur = true;
-    if (aur == NULL || strcmp(AUR_HELPER, "none") == 0) {
+    if (aur == NULL || memcmp(AUR_HELPER, "none", 5) == 0) {
         use_aur = false;
     }
 
