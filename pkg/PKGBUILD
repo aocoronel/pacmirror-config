@@ -23,5 +23,5 @@ build() {
 
 package() {
   cd pacmirror-config-main
-  install -Dm644 pacmirror "${pkgdir}/usr/bin/pacmirror"
+  install -Dm755 pacmirror "${pkgdir}/usr/bin/pacmirror"
 }
