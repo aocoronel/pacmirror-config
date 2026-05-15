@@ -27,7 +27,7 @@ int main(void) {
         CMD("./flag_generator", NULL);
 
         printf("[GEN] pacmirror\n");
-        CMD("cc", "pacmirror.c", "-o", "pacmirror", "-lalpm", NULL);
+        CMD("cc", "pacmirror.c", "-o", "pacmirror", "-lalpm", "-Wall", "-Wextra", NULL);
 
         return 0;
 }
