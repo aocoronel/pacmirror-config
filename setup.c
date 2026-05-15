@@ -4,30 +4,46 @@
 #include <unistd.h>
 #include <wait.h>
 
+#define CMD(...) run((char *[]){ __VA_ARGS__ })
+#define eprintf(...) fprintf(stderr, __VA_ARGS__)
+
 void run(char **argv) {
-        pid_t pid = fork();
-        if (pid == -1) {
-                fprintf(stderr, "ERROR: Failed to run %s\n", argv[0]);
-                exit(1);
-        }
-        if (pid == 0) {
-                execvp(argv[0], argv);
-                exit(127);
-        }
-        waitpid(pid, NULL, 0);
+    pid_t pid = fork();
+    if (pid == -1) {
+        eprintf("[ERROR] Failed to run %s\n", argv[0]);
+        exit(1);
+    }
+    if (pid == 0) {
+        execvp(argv[0], argv);
+        exit(127);
+    }
+    waitpid(pid, NULL, 0);
 }
 
-#define CMD(...) run((char *[]){ __VA_ARGS__ })
-
 int main(void) {
-        printf("[GEN] flag_generator\n");
-        CMD("cc", "flag_generator.c", "-o", "flag_generator", NULL);
+    eprintf("[GEN] flag_generator\n");
+    CMD("cc", "flag_generator.c", "-o", "flag_generator", NULL);
 
-        printf("[RUN] flag_generator\n");
-        CMD("./flag_generator", NULL);
+    eprintf("[RUN] flag_generator\n");
+    CMD("./flag_generator", NULL);
 
-        printf("[GEN] pacmirror\n");
-        CMD("cc", "pacmirror.c", "-o", "pacmirror", "-lalpm", "-Wall", "-Wextra", NULL);
+    eprintf("[GEN] pacmirror\n");
+    CMD("cc",
+        "pacmirror.c",
+        "-o",
+        "pacmirror",
+        "-lalpm",
+        "-Wall",
+        "-Wextra",
 
-        return 0;
+        // Arch Linux
+        "-DARCH",
+        "-DMULTILIB",
+
+        // Artix Linux
+        "-DARTIX",
+        // "-DARTIX_GREMLINS",
+        NULL);
+
+    return 0;
 }

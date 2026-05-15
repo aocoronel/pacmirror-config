@@ -44,7 +44,7 @@
 // === TMP ===
 // #define TMP
 
-// EOF DEFINES
+// END OF DEFINES
 
 #define PROGRAMMER_MODE
 #define DESKTOP_MODE
@@ -188,7 +188,7 @@ char *pacman[] = {
 };
 // clang-format on
 
-void init_aur(DynArray *aur) {
+void init_aur(PackageList *aur) {
     init_da(aur);
     // da_append(aur, "jmtpfs");
     // da_append(aur, "mutt-wizard");
@@ -211,7 +211,7 @@ void init_aur(DynArray *aur) {
 }
 
 int main(int argc, char **argv) {
-    DynArray aur = { 0 };
+    PackageList aur = { 0 };
     init_aur(&aur);
     strcpy(AUR_HELPER, "yay");
     pacmirror(pacman, aur.data, argc, argv);
