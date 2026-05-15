@@ -1,10 +1,11 @@
-//  ____   _    ____ __  __ ___ ____  ____   ___  ____
-// |  _ \ / \  / ___|  \/  |_ _|  _ \|  _ \ / _ \|  _ \
-// | |_) / _ \| |   | |\/| || || |_) | |_) | | | | |_) |
-// |  __/ ___ \ |___| |  | || ||  _ <|  _ <| |_| |  _ <
-// |_| /_/   \_\____|_|  |_|___|_| \_\_| \_\\___/|_| \_\
-//
-// This configuration has only been tested on Artix Linux.
+/*  ____   _    ____ __  __ ___ ____  ____   ___  ____
+ * |  _ \ / \  / ___|  \/  |_ _|  _ \|  _ \ / _ \|  _ \
+ * | |_) / _ \| |   | |\/| || || |_) | |_) | | | | |_) |
+ * |  __/ ___ \ |___| |  | || ||  _ <|  _ <| |_| |  _ <
+ * |_| /_/   \_\____|_|  |_|___|_| \_\_| \_\\___/|_| \_\
+ *
+ * This configuration has only been tested on Artix Linux.
+*/
 
 // === Processor ===
 // #define AMD
@@ -57,7 +58,6 @@
 
 // clang-format off
 char *pacman[] = {
-
         // Artix specific packages
         "artix-archlinux-support dinit elogind-dinit networkmanager-dinit opendoas",
         "pipewire-dinit pipewire-pulse-dinit turnstile turnstile-dinit wireplumber-dinit",
@@ -66,10 +66,10 @@ char *pacman[] = {
 
         "base base-devel cryptsetup efibootmgr grub linux linux-firmware lld llvm lvm2 mesa xfsprogs",
 
-        amd(lib32-vulkan-radeon vulkan-radeon xf86-video-amdgpu),
+        amd(vulkan-radeon xf86-video-amdgpu),
         intel(
                 intel-compute-runtime intel-gmmlib intel-ucode intel-graphics-compiler
-                intel-media-driver lib32-vulkan-intel vulkan-intel
+                intel-media-driver vulkan-intel
         ),
 
         "bash bash-completion",
@@ -189,32 +189,32 @@ char *pacman[] = {
 // clang-format on
 
 void init_aur(DynArray *aur) {
-        init_da(aur);
-        // da_append(aur, "jmtpfs");
-        // da_append(aur, "mutt-wizard");
-        // da_append(aur, "steghide");
-        // da_append(aur, "tomb");
-        da_append(aur, "freetube-bin");
-        da_append(aur, "gf2-git");
-        da_append(aur, "lesspass");
-        da_append(aur, "yay-bin");
+    init_da(aur);
+    // da_append(aur, "jmtpfs");
+    // da_append(aur, "mutt-wizard");
+    // da_append(aur, "steghide");
+    // da_append(aur, "tomb");
+    da_append(aur, "freetube-bin");
+    da_append(aur, "gf2-git");
+    da_append(aur, "lesspass");
+    da_append(aur, "yay-bin");
 
 #ifdef HYPRLAND
-        // da_append(aur, "wttrbar");
+    // da_append(aur, "wttrbar");
 #endif
 
 #ifdef ANYDESK
-        da_append(aur, "anydesk-bin");
-        da_append(aur, "yp-tools");
+    da_append(aur, "anydesk-bin");
+    da_append(aur, "yp-tools");
 #endif
-        da_append_null(aur);
+    da_append_null(aur);
 }
 
 int main(int argc, char **argv) {
-        DynArray aur = { 0 };
-        init_aur(&aur);
-        strcpy(AUR_HELPER, "yay");
-        pacmirror(pacman, aur.data, argc, argv);
-        da_free(aur);
-        free(aur.data);
+    DynArray aur = { 0 };
+    init_aur(&aur);
+    strcpy(AUR_HELPER, "yay");
+    pacmirror(pacman, aur.data, argc, argv);
+    da_free(aur);
+    free(aur.data);
 }
