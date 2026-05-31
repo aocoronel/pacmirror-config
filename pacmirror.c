@@ -64,7 +64,12 @@ char *pacman[] = {
         "wpa_supplicant-dinit archlinux-keyring zram-generator pacman-contrib",
         "ntp ntp-dinit openssh-dinit",
 
-        "base base-devel cryptsetup efibootmgr grub linux linux-firmware lld llvm lvm2 mesa xfsprogs",
+        "base base-devel cryptsetup efibootmgr grub linux lld llvm lvm2 mesa xfsprogs",
+
+        "linux-firmware-amdgpu linux-firmware-atheros linux-firmware-broadcom linux-firmware-cirrus",
+        "linux-firmware-intel linux-firmware-mediatek linux-firmware-other",
+        "linux-firmware-radeon linux-firmware-realtek linux-firmware-whence",
+        // "linux-firmware-nvidia",
 
         amd(vulkan-radeon xf86-video-amdgpu),
         intel(
@@ -112,7 +117,7 @@ char *pacman[] = {
         "firefox",
         "gimp",
         "gnu-free-fonts noto-fonts-emoji ttf-jetbrains-mono-nerd",
-        "libreoffice-still hunspell",
+        // "libreoffice-still hunspell",
         "pandoc-bin",
         "pcmanfm tumbler ffmpegthumbnailer",
         "rofi",
@@ -197,7 +202,6 @@ void init_aur(PackageList *aur) {
     // da_append(aur, "tomb");
     da_append(aur, "freetube-bin");
     da_append(aur, "gf2-git");
-    da_append(aur, "lesspass");
     da_append(aur, "yay-bin");
 
 #ifdef HYPRLAND

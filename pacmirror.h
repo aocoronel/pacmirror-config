@@ -308,10 +308,6 @@ static void synchronize_packages(Packages *pkgs, bool use_aur) {
                COLOR_GREEN,
                COLOR_RESET,
                pkgs->pacman.count - 4);
-        printf("Packages:\n");
-        for (size_t i = 0; i < pkgs->pacman.count; i++) {
-            printf("-> %s\n", pkgs->pacman.data[i]);
-        }
         fork_exec(pkgs->pacman.data);
     } else {
         printf("%spacman packages:%s there is nothing to do\n", COLOR_BOLD, COLOR_RESET);
