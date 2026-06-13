@@ -31,6 +31,7 @@
 #define LUA
 #define PYTHON
 #define SHELL
+// #define C3
 // #define D
 // #define GO
 // #define HASKELL
@@ -114,7 +115,7 @@ char *pacman[] = {
 #ifdef DESKTOP_MODE
         "adwaita-cursors adwaita-icon-theme",
         "dunst libnotify",
-        "firefox",
+        "waterfox-bin",
         "gimp",
         "gnu-free-fonts noto-fonts-emoji ttf-jetbrains-mono-nerd",
         // "libreoffice-still hunspell",
@@ -162,6 +163,7 @@ char *pacman[] = {
 
 #ifdef PROGRAMMER_MODE
         c(clang gcc gdb libtool make mold valgrind tcc), // meson cmake ninja lldb
+        c3(c3c),
         d(dmd dfmt),
         go(go),
         haskell(ghc),
@@ -185,6 +187,7 @@ char *pacman[] = {
         "global aspell aspell-pt aspell-en hunspell libxaw libotf m17n-lib libgccjit",
 #else
         emacs(emacs global aspell aspell-pt aspell-en hunspell libxaw libotf m17n-lib libgccjit),
+        "hunspell-en_us",
 #endif
 
 #ifdef TMP
