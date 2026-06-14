@@ -37,10 +37,10 @@
 // #define HASKELL
 // #define JS
 // #define OCAML
-// #define ODIN
+#define ODIN
 // #define RUBY
-// #define RUST
-// #define ZIG
+#define RUST
+#define ZIG
 
 // === TMP ===
 // #define TMP
@@ -132,6 +132,7 @@ char *pacman[] = {
         // "qutebrowser",
         // "shotcut sox",
         // "tenacity",
+        emacs(hunspell-en_us),
         hyprland(
                 cpio gsettings-desktop-schemas hyprland hyprlang libva-utils lm_sensors
                 waybar wl-clipboard wlr-randr xdg-desktop-portal-hyprland hypridle hyprland-protocols
@@ -172,7 +173,7 @@ char *pacman[] = {
         ocaml(ocaml),
         odin(odin odinfmt),
         ruby(ruby),
-        rust(rustup rust-analyzer),
+        rust(rust rust-analyzer),
         shell(shfmt), // shellcheck
         zig(zig zls),
         python(
@@ -186,8 +187,7 @@ char *pacman[] = {
 #ifndef EMACS
         "global aspell aspell-pt aspell-en hunspell libxaw libotf m17n-lib libgccjit",
 #else
-        emacs(emacs global aspell aspell-pt aspell-en hunspell libxaw libotf m17n-lib libgccjit),
-        "hunspell-en_us",
+        "emacs global aspell aspell-pt aspell-en hunspell libxaw libotf m17n-lib libgccjit",
 #endif
 
 #ifdef TMP
