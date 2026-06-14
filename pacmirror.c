@@ -79,7 +79,7 @@ char *pacman[] = {
         ),
 
         "bash bash-completion",
-        "btop ripgrep zoxide",
+        "btop zoxide", // ripgrep
         "mpv",
         "opusfile libmad libvorbis wavpack",
         // "cmus playerctl",
@@ -198,14 +198,13 @@ char *pacman[] = {
 // clang-format on
 
 void init_aur(PackageList *aur) {
-    init_da(aur);
     // da_append(aur, "jmtpfs");
     // da_append(aur, "mutt-wizard");
     // da_append(aur, "steghide");
     // da_append(aur, "tomb");
     da_append(aur, "freetube-bin");
     da_append(aur, "gf2-git");
-    da_append(aur, "yay-bin");
+    // da_append(aur, "yay-bin");
 
 #ifdef HYPRLAND
     // da_append(aur, "wttrbar");
@@ -220,9 +219,11 @@ void init_aur(PackageList *aur) {
 
 int main(int argc, char **argv) {
     PackageList aur = { 0 };
-    init_aur(&aur);
-    strcpy(AUR_HELPER, "yay");
+    {
+        aur = init_da();
+        init_aur(&aur);
+    }
     pacmirror(pacman, aur.data, argc, argv);
-    da_free(aur);
+    da_free(&aur);
     free(aur.data);
 }

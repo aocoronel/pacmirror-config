@@ -29,7 +29,7 @@ int main(void) {
     while ((c = fgetc(fp)) != EOF) {
         buff[buff_size++] = c;
         if (c == '\n') {
-            int i = 0;
+            size_t i = 0;
             bool has_define = false;
 
             if (memcmp(buff, "#define", STRLEN("#define")) == 0) {
@@ -52,7 +52,7 @@ int main(void) {
                 char *flag_name_low = malloc(sizeof(char) * flag_size);
                 memcpy(flag_name_low, flag_name, flag_size);
 
-                for (int j = 0; j < flag_size; j++) {
+                for (size_t j = 0; j < flag_size; j++) {
                     flag_name_low[j] = tolower(flag_name_low[j]);
                 }
 
