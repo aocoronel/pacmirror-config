@@ -67,12 +67,12 @@ char *pacman[] = {
 
         "base base-devel cryptsetup efibootmgr grub linux lld llvm lvm2 mesa xfsprogs",
 
-        "linux-firmware-amdgpu linux-firmware-atheros linux-firmware-broadcom linux-firmware-cirrus",
+        "linux-firmware-atheros linux-firmware-broadcom linux-firmware-cirrus",
         "linux-firmware-intel linux-firmware-mediatek linux-firmware-other",
         "linux-firmware-radeon linux-firmware-realtek linux-firmware-whence",
         // "linux-firmware-nvidia",
 
-        amd(vulkan-radeon xf86-video-amdgpu),
+        amd(linux-firmware-amdgpu lvulkan-radeon xf86-video-amdgpu),
         intel(
                 intel-compute-runtime intel-gmmlib intel-ucode intel-graphics-compiler
                 intel-media-driver vulkan-intel
