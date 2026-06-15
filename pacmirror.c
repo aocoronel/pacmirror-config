@@ -39,7 +39,7 @@
 // #define OCAML
 #define ODIN
 // #define RUBY
-#define RUST
+// #define RUST
 #define ZIG
 
 // === TMP ===
