@@ -225,5 +225,4 @@ int main(int argc, char **argv) {
     }
     pacmirror(pacman, aur.data, argc, argv);
     da_free(&aur);
-    free(aur.data);
 }
