@@ -40,7 +40,7 @@
 #define ODIN
 // #define RUBY
 // #define RUST
-#define ZIG
+// #define ZIG
 
 // === TMP ===
 // #define TMP
@@ -204,6 +204,7 @@ void init_aur(PackageList *aur) {
     // da_append(aur, "tomb");
     da_append(aur, "freetube-bin");
     da_append(aur, "gf2-git");
+    da_append(aur, "nnn");
     // da_append(aur, "yay-bin");
 
 #ifdef HYPRLAND
