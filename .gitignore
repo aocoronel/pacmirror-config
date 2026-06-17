@@ -1,3 +1,5 @@
 flag_generator
 flags.h
 pacmirror
+pkg/*/*
+!pkg/*/PKGBUILD
