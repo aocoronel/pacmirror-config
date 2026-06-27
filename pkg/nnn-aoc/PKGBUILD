@@ -4,7 +4,7 @@
 # Contributor: Pablo Arias <pabloariasal@gmail.com>
 # Contributor: John Jenkins <twodopeshaggy@gmail.com>
 
-pkgname=nnn
+pkgname=nnn-aoc
 pkgver=5.2
 pkgrel=1
 pkgdesc="The fastest terminal file manager ever written."
@@ -21,23 +21,24 @@ optdepends=(
     'fuse2: unmount remotes'
     'xdg-utils: desktop opener'
 )
-url="https://github.com/jarun/${pkgname}"
+conflicts=('nnn')
+url="https://github.com/jarun/nnn"
 license=('BSD-2-Clause')
-source=("${pkgname}-${pkgver}.tar.gz::https://github.com/jarun/nnn/releases/download/v$pkgver/nnn-v$pkgver.tar.gz")
+source=("nnn-${pkgver}.tar.gz::https://github.com/jarun/nnn/releases/download/v$pkgver/nnn-v$pkgver.tar.gz")
 sha512sums=('SKIP')
 
 prepare() {
-    sed -i 's/install: all/install:/' "${pkgname}-${pkgver}/Makefile"
-    sed -i 's/O_NERD := 0  # support icons-nerdfont/O_NERD := 1  # support icons-nerdfont/' "${pkgname}-${pkgver}/Makefile"
+    sed -i 's/install: all/install:/' "nnn-${pkgver}/Makefile"
+    sed -i 's/O_NERD := 0  # support icons-nerdfont/O_NERD := 1  # support icons-nerdfont/' "nnn-${pkgver}/Makefile"
 }
 
 build() {
-    cd "${pkgname}-${pkgver}"
+    cd "nnn-${pkgver}"
     make
 }
 
 package() {
-    cd "${pkgname}-${pkgver}"
+    cd "nnn-${pkgver}"
     make DESTDIR="${pkgdir}" PREFIX=/usr install
     make DESTDIR="${pkgdir}" PREFIX=/usr install-desktop
 
@@ -49,5 +50,5 @@ package() {
 
     cp -a plugins "${pkgdir}/usr/share/nnn/plugins/"
 
-    install -Dm644 -t "${pkgdir}/usr/share/licenses/${pkgname}/" LICENSE
+    install -Dm644 -t "${pkgdir}/usr/share/licenses/nnn/" LICENSE
 }

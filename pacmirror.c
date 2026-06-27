@@ -37,9 +37,9 @@
 // #define HASKELL
 // #define JS
 // #define OCAML
-#define ODIN
+// #define ODIN
 // #define RUBY
-// #define RUST
+#define RUST
 // #define ZIG
 
 // === TMP ===
@@ -115,7 +115,6 @@ char *pacman[] = {
 #ifdef DESKTOP_MODE
         "adwaita-cursors adwaita-icon-theme",
         "dunst libnotify",
-        "waterfox-bin",
         "gimp",
         "gnu-free-fonts noto-fonts-emoji ttf-jetbrains-mono-nerd",
         // "libreoffice-still hunspell",
@@ -204,7 +203,8 @@ void init_aur(PackageList *aur) {
     // da_append(aur, "tomb");
     da_append(aur, "freetube-bin");
     da_append(aur, "gf2-git");
-    da_append(aur, "nnn");
+    da_append(aur, "nnn-aoc");
+    da_append(aur, "brave-origin-bin");
     // da_append(aur, "yay-bin");
 
 #ifdef HYPRLAND
