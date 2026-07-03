@@ -39,7 +39,7 @@
 // #define OCAML
 // #define ODIN
 // #define RUBY
-#define RUST
+// #define RUST
 // #define ZIG
 
 // === TMP ===
@@ -74,26 +74,26 @@ char *pacman[] = {
 
         amd(linux-firmware-amdgpu lvulkan-radeon xf86-video-amdgpu),
         intel(
-                intel-compute-runtime intel-gmmlib intel-ucode intel-graphics-compiler
-                intel-media-driver vulkan-intel
+              intel-compute-runtime intel-gmmlib intel-ucode intel-graphics-compiler
+              intel-media-driver vulkan-intel
         ),
 
         "bash bash-completion",
         "btop zoxide", // ripgrep
-        "mpv",
-        "opusfile libmad libvorbis wavpack",
-        // "cmus playerctl",
         "curl ffmpeg jq imagemagick openssh openssl sqlite ueberzugpp",
         "fastfetch",
         "fzf direnv",
-        "git gitleaks git-filter-repo gnupg",
+        "git gnupg", // gitleaks git-filter-repo
         "libpulse pipewire pipewire-alsa pipewire-audio pipewire-jack pipewire-pulse gst-plugin-pipewire wireplumber",
         "mandoc man-pages",
+        "mpv",
         "neovim",
+        "opusfile libmad libvorbis wavpack",
         "pass pass-otp zbar oath-toolkit",
+        "ranger",
         "restic",
         "rsync",
-        "tar zip unzip",
+        "tar gzip zip unzip",
         "tree less lsof moreutils wget which",
         "ufw",
         "wpa_supplicant networkmanager",
@@ -101,6 +101,7 @@ char *pacman[] = {
         // "android-tools gvfs gvfs-mtp mtpfs",
         // "bat eza fd sd",
         // "bluez bluez-utils",
+        // "cmus playerctl",
         // "distrobox",
         // "docker docker-compose",
         // "harper",
@@ -108,30 +109,28 @@ char *pacman[] = {
         // "newsboat",
         // "podman podman-compose podman-docker",
         // "prettier",
-        "ranger",
-        // "yazi",
         // "rclone",
+        // "yazi",
 
 #ifdef DESKTOP_MODE
         "adwaita-cursors adwaita-icon-theme",
         "dunst libnotify",
         "gimp",
         "gnu-free-fonts noto-fonts-emoji ttf-jetbrains-mono-nerd",
-        // "libreoffice-still hunspell",
         "pandoc-bin",
-        "pcmanfm tumbler ffmpegthumbnailer",
         "rofi",
-        // "thunderbird",
-        // "wine",
         "wireguard-tools openresolv",
         "xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils",
         "yt-dlp python-mutagen",
         "zathura zathura-pdf-mupdf",
+        // "libreoffice-still hunspell",
+        // "pcmanfm tumbler ffmpegthumbnailer",
         // "polkit udiskie udisks2",
         // "qutebrowser",
         // "shotcut sox",
         // "tenacity",
-        emacs(hunspell-en_us),
+        // "thunderbird",
+        // "wine",
         hyprland(
                 cpio gsettings-desktop-schemas hyprland hyprlang libva-utils lm_sensors
                 waybar wl-clipboard wlr-randr xdg-desktop-portal-hyprland hypridle hyprland-protocols
@@ -176,17 +175,17 @@ char *pacman[] = {
         shell(shfmt), // shellcheck
         zig(zig zls),
         python(
-                python imath
-                pystring python-beautifulsoup4 python-dateutil python-feedgen python-lxml
-                python-mutagen python-pytz python-six
+               python imath
+               pystring python-beautifulsoup4 python-dateutil python-feedgen python-lxml
+               python-mutagen python-pytz python-six
         ),
 #endif // PROGRAMMER_MODE
 
         // If EMACS is defined, install the emacs package, else assumes source compiling
 #ifndef EMACS
-        "global aspell aspell-pt aspell-en hunspell libxaw libotf m17n-lib libgccjit",
+        "hunspell-en_us aspell-pt aspell-en hunspell libxaw libotf m17n-lib libgccjit", // global
 #else
-        "emacs global aspell aspell-pt aspell-en hunspell libxaw libotf m17n-lib libgccjit",
+        "emacs hunspell-en_us aspell aspell-pt aspell-en hunspell libxaw libotf m17n-lib libgccjit", // global
 #endif
 
 #ifdef TMP
@@ -203,7 +202,6 @@ void init_aur(PackageList *aur) {
     // da_append(aur, "tomb");
     da_append(aur, "freetube-bin");
     da_append(aur, "gf2-git");
-    da_append(aur, "nnn-aoc");
     da_append(aur, "brave-origin-bin");
     // da_append(aur, "yay-bin");
 
