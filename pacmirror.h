@@ -82,6 +82,13 @@ typedef struct {
     PackageList rm;
 } Packages;
 
+typedef struct {
+    int explicit;
+    int dependency;
+
+    off_t used_size;
+} pkg_metadata;
+
 static bool parse_args(int argc, char **argv) {
     ASSERT_NONNULL(argv);
 
@@ -172,7 +179,8 @@ static bool is_installed(const char *name, alpm_list_t *list) {
     return false;
 }
 
-static bool get_explicitly_installed_pkgs(Packages *packages, char **pacman, char **aur) {
+static int
+get_explicitly_installed_pkgs(Packages *packages, char **pacman, char **aur, pkg_metadata *out) {
     ASSERT_NONNULL(packages);
     ASSERT_NONNULL(pacman);
     init_packages(packages);
@@ -244,7 +252,16 @@ static bool get_explicitly_installed_pkgs(Packages *packages, char **pacman, cha
         alpm_pkg_t *pkg = node->data;
         const char *name = alpm_pkg_get_name(pkg);
 
-        if (alpm_pkg_get_reason(pkg) != ALPM_PKG_REASON_EXPLICIT) continue;
+        off_t pkg_size = alpm_pkg_get_isize(pkg);
+
+        out->used_size += pkg_size;
+
+        if (alpm_pkg_get_reason(pkg) != ALPM_PKG_REASON_EXPLICIT) {
+            out->dependency += 1;
+            continue;
+        }
+
+        out->explicit += 1;
 
         if (pkg_get_locality(pkg, handle)) { // Foreign
             for (size_t i = 0; i < aur_config_pkgs.count; i++) {
@@ -368,13 +385,19 @@ int pacmirror(char **pacman, char **aur, int argc, char **argv) {
     if (parse_args(argc, argv) == false) return 1;
 
     Packages pkgs = { 0 };
-    bool err = get_explicitly_installed_pkgs(&pkgs, pacman, aur);
+    pkg_metadata pkgc = { 0 };
+    bool err = get_explicitly_installed_pkgs(&pkgs, pacman, aur, &pkgc);
     if (!err) {
-        eprintf("[FATAL] Failed to get package list\n");
+        eprintf("[fatal] Failed to get package list\n");
         return 1;
     }
 
     synchronize_packages(&pkgs);
+
+    eprintf("%d explicit packages, and %d dependencies installed, using a total of %zu MBs\n",
+            pkgc.explicit,
+            pkgc.dependency,
+            pkgc.used_size / 1024 / 1024);
 
     return 0;
 }
