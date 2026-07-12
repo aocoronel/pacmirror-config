@@ -5,12 +5,7 @@ This repository is a personal configuration. The actual development of `pacmirro
 ## How to use
 
 ```bash
-❯ ./setup.sh
-+ CFLAGS='-Wall -Wextra'
-+ cc -Wall -Wextra flag_generator.c -o flag_generator
-+ ./flag_generator
-+ cc -Wall -Wextra pacmirror.c -o pacmirror -lalpm -DARCH -DMULTILIB -DARTIX
-
+❯ cc @build && ./make
 ❯ ./pacmirror
 ```
 

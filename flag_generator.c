@@ -1,3 +1,5 @@
+// bin: -Wall -Wextra
+
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
