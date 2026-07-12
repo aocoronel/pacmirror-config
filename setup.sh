@@ -1,9 +1,10 @@
 #!/usr/bin/env sh
 
-set -xe
-
 CFLAGS="-Wall -Wextra"
+DEFINES="-lalpm -DARCH -DMULTILIB -DARTIX"
+
+set -xe
 
 cc $CFLAGS flag_generator.c -o flag_generator
 ./flag_generator
-cc $CFLAGS pacmirror.c -o pacmirror -lalpm -DARCH -DMULTILIB -DARTIX
+cc $CFLAGS $DEFINES pacmirror.c -o pacmirror
