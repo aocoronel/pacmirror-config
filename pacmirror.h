@@ -392,12 +392,12 @@ int pacmirror(char **pacman, char **aur, int argc, char **argv) {
         return 1;
     }
 
-    synchronize_packages(&pkgs);
-
     eprintf("%d explicit packages, and %d dependencies installed, using a total of %zu MBs\n",
             pkgc.explicit,
             pkgc.dependency,
             pkgc.used_size / 1024 / 1024);
+
+    synchronize_packages(&pkgs);
 
     return 0;
 }

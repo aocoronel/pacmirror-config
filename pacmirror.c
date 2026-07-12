@@ -9,6 +9,7 @@
 
 // === Processor ===
 // #define AMD
+// #define NVIDIA
 #define INTEL
 
 // === Display ===
@@ -39,7 +40,7 @@
 // #define OCAML
 // #define ODIN
 // #define RUBY
-// #define RUST
+#define RUST
 // #define ZIG
 
 // === TMP ===
@@ -60,27 +61,28 @@
 // clang-format off
 char *pacman[] = {
         // Artix specific packages
-        "artix-archlinux-support dinit elogind-dinit networkmanager-dinit opendoas",
-        "pipewire-dinit pipewire-pulse-dinit turnstile turnstile-dinit wireplumber-dinit",
-        "wpa_supplicant-dinit archlinux-keyring zram-generator pacman-contrib",
-        "ntp ntp-dinit openssh-dinit",
+        "artix-archlinux-support opendoas",
+        "archlinux-keyring zram-generator pacman-contrib",
+        "dinit elogind-dinit networkmanager-dinit pipewire-dinit pipewire-pulse-dinit",
+        "wpa_supplicant-dinit turnstile-dinit wireplumber-dinit ntp-dinit openssh-dinit",
+        "turnstile ntp",
 
         "base base-devel cryptsetup efibootmgr grub linux lld llvm lvm2 mesa xfsprogs",
 
         "linux-firmware-atheros linux-firmware-broadcom linux-firmware-cirrus",
-        "linux-firmware-intel linux-firmware-mediatek linux-firmware-other",
-        "linux-firmware-radeon linux-firmware-realtek linux-firmware-whence",
-        // "linux-firmware-nvidia",
+        "linux-firmware-mediatek linux-firmware-other linux-firmware-realtek linux-firmware-whence",
 
-        amd(linux-firmware-amdgpu lvulkan-radeon xf86-video-amdgpu),
+        amd(linux-firmware-amdgpu lvulkan-radeon linux-firmware-radeon),
+        nvidia(linux-firmware-nvidia),
         intel(
+              linux-firmware-intel
               intel-compute-runtime intel-gmmlib intel-ucode intel-graphics-compiler
               intel-media-driver vulkan-intel
         ),
 
-        "bash bash-completion",
+        "bash", // bash-completion
         "btop zoxide", // ripgrep
-        "curl ffmpeg jq imagemagick openssh openssl sqlite ueberzugpp",
+        "curl ffmpeg imagemagick openssh openssl sqlite ueberzugpp", // jq
         "fastfetch",
         "fzf direnv",
         "git gnupg", // gitleaks git-filter-repo
@@ -195,33 +197,20 @@ char *pacman[] = {
 };
 // clang-format on
 
-void init_aur(PackageList *aur) {
-    // da_append(aur, "jmtpfs");
-    // da_append(aur, "mutt-wizard");
-    // da_append(aur, "steghide");
-    // da_append(aur, "tomb");
-    da_append(aur, "freetube-bin");
-    da_append(aur, "gf2-git");
-    da_append(aur, "brave-origin-bin");
-    // da_append(aur, "yay-bin");
-
-#ifdef HYPRLAND
-    // da_append(aur, "wttrbar");
-#endif
-
-#ifdef ANYDESK
-    da_append(aur, "anydesk-bin");
-    da_append(aur, "yp-tools");
-#endif
-    da_append_null(aur);
-}
+// clang-format off
+char *aur[] = {
+    "gf2-git",
+    "brave-origin-bin",
+    // "jmtpfs",
+    // "mutt-wizard",
+    // "steghide",
+    // "tomb",
+    hyprland(wttrbar),
+    anydesk(anydesk-bin yp-tools),
+    NULL,
+};
+// clang-format on
 
 int main(int argc, char **argv) {
-    PackageList aur = { 0 };
-    {
-        aur = init_da();
-        init_aur(&aur);
-    }
-    pacmirror(pacman, aur.data, argc, argv);
-    da_free(&aur);
+    return pacmirror(pacman, aur, argc, argv);
 }
