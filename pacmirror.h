@@ -67,7 +67,6 @@
         free((da)->data);                          \
     } while (0)
 
-// char AUR_HELPER[256] = "none";
 char SUDO[256] = "sudo";
 
 typedef struct {
@@ -100,10 +99,10 @@ static bool parse_args(int argc, char **argv) {
             strcpy(SUDO, optarg);
             break;
         case ':':
-            printf("option '%c' needs a value\n", opt);
+            eprintf("error: option '%c' needs a value\n", opt);
             return false;
         case '?':
-            printf("unknown option: %c\n", optopt);
+            eprintf("error: unknown option: '%c'\n", optopt);
             return false;
         }
     }
@@ -205,7 +204,7 @@ get_explicitly_installed_pkgs(Packages *packages, char **pacman, char **aur, pkg
     alpm_errno_t error;
     alpm_handle_t *handle = alpm_initialize("/", "/var/lib/pacman", &error);
     if (!handle) {
-        eprintf("Database is locked. Maybe another pacman process is running? (%d)\n", error);
+        eprintf("error: %s\n", alpm_strerror(error));
         return false;
     }
 
@@ -242,7 +241,7 @@ get_explicitly_installed_pkgs(Packages *packages, char **pacman, char **aur, pkg
     alpm_db_t *localdb = alpm_get_localdb(handle);
     alpm_list_t *list = alpm_db_get_pkgcache(localdb);
     if (!list) {
-        eprintf("Failed to get the package cache from the database (%d)\n", error);
+        eprintf("error: failed to get the package cache from the database\n");
         alpm_release(handle);
         return false;
     }
@@ -328,7 +327,7 @@ static int run(char **argv) {
     ASSERT_NONNULL(argv);
     pid_t pid = fork();
     if (pid == -1) {
-        eprintf("[ERROR] Failed to run %s\n", argv[0]);
+        eprintf("error: failed to run %s\n", argv[0]);
         exit(1);
     }
     if (pid == 0) {
@@ -376,6 +375,7 @@ static void synchronize_packages(Packages *pkgs) {
 int pacmirror(char **pacman, char **aur, int argc, char **argv) {
     ASSERT_NONNULL(pacman);
     ASSERT_NONNULL(argv);
+
     char *env = getenv("SUDO");
     if (env) {
         assert(strlen(env) < sizeof(SUDO));
@@ -387,15 +387,12 @@ int pacmirror(char **pacman, char **aur, int argc, char **argv) {
     Packages pkgs = { 0 };
     pkg_metadata pkgc = { 0 };
     bool err = get_explicitly_installed_pkgs(&pkgs, pacman, aur, &pkgc);
-    if (!err) {
-        eprintf("[fatal] Failed to get package list\n");
-        return 1;
-    }
+    if (!err) return 1;
 
-    eprintf("%d explicit packages, and %d dependencies installed, using a total of %zu MBs\n",
-            pkgc.explicit,
-            pkgc.dependency,
-            pkgc.used_size / 1024 / 1024);
+    printf("%d explicit packages, and %d dependencies installed, using a total of %zu MBs\n",
+           pkgc.explicit,
+           pkgc.dependency,
+           pkgc.used_size / 1024 / 1024);
 
     synchronize_packages(&pkgs);
 
