@@ -1,0 +1,24 @@
+# Maintainer: Augusto Coronel <aocoronel@proton.me>
+
+pkgname=ols-git
+pkgver=master
+pkgrel=1
+pkgdesc='Language server for Odin'
+arch=(x86_64)
+url='https://github.com/DanielGavin/ols'
+license=(MIT)
+depends=(odin)
+makedepends=()
+options=()
+source=("https://github.com/DanielGavin/ols/archive/refs/heads/${pkgver}.zip")
+sha256sums=('SKIP')
+
+build() {
+  cd "$srcdir/ols-${pkgver}"
+  ./build.sh
+}
+
+package() {
+  cd "$srcdir/ols-${pkgver}"
+  install -D ols "$pkgdir/usr/bin/ols"
+}

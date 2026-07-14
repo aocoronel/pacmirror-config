@@ -212,7 +212,7 @@ char *aur[] = {
 
 	// This one is because I'm vendoring the official Arch Linux PKGBUILD,
 	// so I can keep it at the latest version
-	odin(odin),
+	odin(odin ols-git),
     NULL,
 };
 // clang-format on
