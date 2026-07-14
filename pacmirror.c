@@ -40,7 +40,7 @@
 // #define HASKELL
 // #define JS
 // #define OCAML
-// #define ODIN
+#define ODIN
 // #define RUBY
 #define RUST
 // #define ZIG
@@ -209,6 +209,10 @@ char *aur[] = {
     // "tomb",
     hyprland(wttrbar),
     anydesk(anydesk-bin yp-tools),
+
+	// This one is because I'm vendoring the official Arch Linux PKGBUILD,
+	// so I can keep it at the latest version
+	odin(odin),
     NULL,
 };
 // clang-format on

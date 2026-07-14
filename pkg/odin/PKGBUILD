@@ -1,0 +1,39 @@
+# Maintainer: Alexander F. Rødseth <xyproto@archlinux.org>
+# Contributor: Ivan Souza <ivanttt54@gmail.com>
+# Contributor: Jesus Alvarez <jeezusjr@gmail.com>
+# Contributor: Kaizhao Zhang <zhangkaizhao@gmail.com>
+# Contributor: Payn <ivanttt54@gmail.com>
+# Contributor: Johannes Müller <mail@jotrorox.com>
+
+pkgname=odin
+pkgver=dev_2026_07a
+pkgrel=1
+pkgdesc='Data-oriented programming language'
+arch=(x86_64)
+url='https://odin-lang.org/'
+license=(BSD-3-Clause)
+depends=(clang llvm21-libs python)
+makedepends=(git llvm21 stb)
+checkdepends=(mbedtls)
+options=(staticlibs)
+source=("https://github.com/odin-lang/Odin/releases/download/${pkgver//_/-}/odin-linux-amd64-${pkgver//_/-}.tar.gz")
+b2sums=('SKIP')
+
+build() {
+  cd "$srcdir/Odin-${pkgver//_/-}"
+  export CXX=clang++
+  export LLVM_CONFIG=/usr/lib/llvm21/bin/llvm-config
+  make release-native
+
+  make -C vendor/cgltf/src
+  make -C vendor/miniaudio/src
+  make -C vendor/stb/src
+}
+
+package() {
+  cd "$srcdir/Odin-${pkgver//_/-}"
+  install -d "$pkgdir/usr/"{bin,lib/$pkgname}
+  cp odin "$pkgdir/usr/lib/$pkgname/odin"
+  cp -r base core shared vendor "$pkgdir/usr/lib/$pkgname/"
+  ln -s "/usr/lib/$pkgname/odin" "$pkgdir/usr/bin/odin"
+}
