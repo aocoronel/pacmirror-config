@@ -40,7 +40,7 @@
 // #define HASKELL
 // #define JS
 // #define OCAML
-#define ODIN
+// #define ODIN
 // #define RUBY
 #define RUST
 // #define ZIG
