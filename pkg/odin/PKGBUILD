@@ -6,7 +6,7 @@
 # Contributor: Johannes Müller <mail@jotrorox.com>
 
 pkgname=odin
-pkgver=dev_2026_07a
+pkgver=dev_2026_08
 pkgrel=1
 pkgdesc='Data-oriented programming language'
 arch=(x86_64)
