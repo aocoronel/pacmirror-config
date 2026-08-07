@@ -98,7 +98,7 @@ char *pacman[] = {
         "restic",
         "rsync",
         "tar gzip zip unzip",
-        "tree less lsof moreutils wget which",
+        "tree less lsof wget which", // moreutils
         "ufw",
         "wpa_supplicant networkmanager",
         "zsh",
@@ -147,7 +147,7 @@ char *pacman[] = {
         // wayland(grim satty slurp wf-recorder),
 
         x11(conky xwallpaper nsxiv zenity dconf dmenu picom redshift sxhkd xclip xdotool
-            xorg-xinit xorg-xrandr xsel flameshot clipmenu
+            xorg-xinit xorg-xrandr xsel ksnip clipmenu
             libxft xlibre-input-elographics xlibre-input-evdev xlibre-input-joystick
             xlibre-input-keyboard xlibre-input-libinput xlibre-input-mouse xlibre-input-synaptics
             xlibre-input-vmmouse xlibre-input-void xlibre-input-wacom xlibre-video-amdgpu
@@ -173,7 +173,7 @@ char *pacman[] = {
         js(nodejs npm),
         lua(stylua),
         ocaml(ocaml),
-        odin(odin odinfmt),
+        odin(odinfmt),
         ruby(ruby),
         rust(rust rust-analyzer),
         shell(shfmt), // shellcheck
@@ -210,9 +210,7 @@ char *aur[] = {
     hyprland(wttrbar),
     anydesk(anydesk-bin yp-tools),
 
-	// This one is because I'm vendoring the official Arch Linux PKGBUILD,
-	// so I can keep it at the latest version
-	odin(odin ols-git),
+	odin(odin-git ols-git),
     NULL,
 };
 // clang-format on
