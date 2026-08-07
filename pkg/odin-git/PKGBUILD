@@ -1,11 +1,6 @@
-# Maintainer: Alexander F. Rødseth <xyproto@archlinux.org>
-# Contributor: Ivan Souza <ivanttt54@gmail.com>
-# Contributor: Jesus Alvarez <jeezusjr@gmail.com>
-# Contributor: Kaizhao Zhang <zhangkaizhao@gmail.com>
-# Contributor: Payn <ivanttt54@gmail.com>
-# Contributor: Johannes Müller <mail@jotrorox.com>
+# Maintainer: Augusto Coronel <aocoronel@proton.me>
 
-pkgname=odin
+pkgname=odin-git
 pkgver=dev_2026_08
 pkgrel=1
 pkgdesc='Data-oriented programming language'
@@ -16,7 +11,7 @@ depends=(clang llvm21-libs python)
 makedepends=(git llvm21 stb)
 checkdepends=(mbedtls)
 options=(staticlibs)
-source=("https://github.com/odin-lang/Odin/releases/download/${pkgver//_/-}/odin-linux-amd64-${pkgver//_/-}.tar.gz")
+source=("https://github.com/odin-lang/Odin/archive/refs/tags/${pkgver//_/-}.tar.gz")
 b2sums=('SKIP')
 
 build() {
@@ -24,10 +19,6 @@ build() {
   export CXX=clang++
   export LLVM_CONFIG=/usr/lib/llvm21/bin/llvm-config
   make release-native
-
-  make -C vendor/cgltf/src
-  make -C vendor/miniaudio/src
-  make -C vendor/stb/src
 }
 
 package() {
