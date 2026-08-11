@@ -1,0 +1,20 @@
+# Maintainer: Augusto Coronel <aocoronel@proton.me>
+
+pkgname=dwm-statusbar
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="dwm statusbar"
+url="https://wiki.archlinux.org/title/Dwm"
+arch=('i686' 'x86_64' 'arm' 'armv7h' 'armv6h' 'aarch64')
+license=('Unknown') # Possibly public-domain?
+depends=('dwm')
+source=(./dwm-statusbar.c)
+sha256sums=('SKIP')
+
+build() {
+  cc -O2 -o dwm-statusbar.out ./dwm-statusbar.c -lX11
+}
+
+package() {
+  install -D dwm-statusbar.out "$pkgdir/usr/bin/dwm-statusbar"
+}

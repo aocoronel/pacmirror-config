@@ -209,7 +209,7 @@ char *aur[] = {
     // "tomb",
     hyprland(wttrbar),
     anydesk(anydesk-bin yp-tools),
-
+	x11(dwm st dwm-statusbar),
 	odin(odin-git ols-git),
     NULL,
 };

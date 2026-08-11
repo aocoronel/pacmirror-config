@@ -1,5 +1,9 @@
 flag_generator
 flags.h
 pacmirror
-pkg/*/*
-!pkg/*/PKGBUILD
+pkg/*/src
+pkg/*/pkg
+pkg/*/.*
+pkg/*/*.tar*
+pkg/*/*.rst*
+pkg/*/*.zip*
