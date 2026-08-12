@@ -18,11 +18,6 @@
 #define X11
 // #define WAYLAND
 
-// === WM ===
-#ifdef WAYLAND
-// #define HYPRLAND
-#endif
-
 // === SOFTWARE ===
 #define ANYDESK
 #define EMACS
@@ -31,22 +26,23 @@
 
 // === LANGUAGES ===
 #define C
-#define LUA
-#define PYTHON
-#define SHELL
 // #define C3
 // #define D
+// #define ELIXIR
+// #define ERLANG
 // #define GO
 // #define HASKELL
+// #define JAVA
 // #define JS
+// #define KOTLIN
+#define LUA
 // #define OCAML
 #define ODIN
+#define PYTHON
 // #define RUBY
 // #define RUST
+#define SHELL
 // #define ZIG
-
-// === TMP ===
-// #define TMP
 
 // END OF DEFINES
 
@@ -54,11 +50,7 @@
 #define DESKTOP_MODE
 
 #include "flags.h"
-
 #include "pacmirror.h"
-#include <stddef.h>
-#include <string.h>
-#include <unistd.h>
 
 // clang-format off
 char *pacman[] = {
@@ -74,12 +66,12 @@ char *pacman[] = {
         "linux-firmware-atheros linux-firmware-broadcom linux-firmware-cirrus",
         "linux-firmware-mediatek linux-firmware-other linux-firmware-realtek linux-firmware-whence",
 
-        amd(linux-firmware-amdgpu lvulkan-radeon linux-firmware-radeon),
-        nvidia(linux-firmware-nvidia),
+        amd("linux-firmware-amdgpu lvulkan-radeon linux-firmware-radeon"),
+        nvidia("linux-firmware-nvidia"),
         intel(
-              linux-firmware-intel
-              intel-compute-runtime intel-gmmlib intel-ucode intel-graphics-compiler
-              intel-media-driver vulkan-intel
+              "linux-firmware-intel",
+              "intel-compute-runtime intel-gmmlib intel-ucode intel-graphics-compiler",
+              "intel-media-driver vulkan-intel",
         ),
 
         "bash", // bash-completion
@@ -116,6 +108,10 @@ char *pacman[] = {
         // "rclone",
         // "yazi",
 
+        // If EMACS is not defined, assume source compiling
+        "aspell hunspell-en_us aspell-pt aspell-en hunspell libxaw libotf m17n-lib libgccjit", // global
+        emacs("emacs"),
+
 #ifdef DESKTOP_MODE
         "adwaita-cursors adwaita-icon-theme",
         "dunst libnotify",
@@ -135,65 +131,55 @@ char *pacman[] = {
         // "tenacity",
         // "thunderbird",
         // "wine",
-        hyprland(
-                cpio gsettings-desktop-schemas hyprland hyprlang libva-utils lm_sensors
-                waybar wl-clipboard wlr-randr xdg-desktop-portal-hyprland hypridle hyprland-protocols
-                hyprlock hyprpaper hyprpicker hyprpolkitagent hyprsunset
+
+        virtual_machine("bridge-utils dnsmasq dosfstools libvirt lxc qemu-full swtpm virt-manager virt-viewer"),
+
+        wayland(
+            "fuzzel pavucontrol swayimg swaybg cliphist xdg-user-dirs ydotool foot"
+            // "grim satty slurp wf-recorder",
+            "cpio gsettings-desktop-schemas libva-utils lm_sensors wl-clipboard wlr-randr",
         ),
 
-        virtual_machine(bridge-utils dnsmasq dosfstools libvirt lxc qemu-full swtpm virt-manager virt-viewer),
+        x11(
+            "libxft xlibre-input-elographics xlibre-input-evdev xlibre-input-joystick",
+            "xlibre-input-keyboard xlibre-input-libinput xlibre-input-mouse xlibre-input-synaptics",
+            "xlibre-input-vmmouse xlibre-input-void xlibre-input-wacom xlibre-video-amdgpu",
+            "xlibre-video-ast xlibre-video-ati xlibre-video-dummy xlibre-video-fbdev",
+            "xlibre-video-intel xlibre-video-nouveau xlibre-video-qxl xlibre-video-sisusb",
+            "xlibre-video-vesa xlibre-video-vmware xlibre-video-voodoo xlibre-xserver",
+            "xlibre-xserver-common xlibre-xserver-devel xlibre-xserver-xephyr xlibre-xserver-xnest",
+            "xlibre-xserver-xvfb xorg-xset xorg-xinit xorg-xrandr xsel xclip xdotool",
 
-        wayland(fuzzel pavucontrol swayimg swaybg cliphist xdg-user-dirs ydotool foot),
-        // wayland(grim satty slurp wf-recorder),
-
-        x11(conky xwallpaper nsxiv zenity dconf dmenu picom redshift sxhkd xclip xdotool
-            xorg-xinit xorg-xrandr xsel ksnip clipmenu
-            libxft xlibre-input-elographics xlibre-input-evdev xlibre-input-joystick
-            xlibre-input-keyboard xlibre-input-libinput xlibre-input-mouse xlibre-input-synaptics
-            xlibre-input-vmmouse xlibre-input-void xlibre-input-wacom xlibre-video-amdgpu
-            xlibre-video-ast xlibre-video-ati xlibre-video-dummy xlibre-video-fbdev
-            xlibre-video-intel xlibre-video-nouveau xlibre-video-qxl xlibre-video-sisusb
-            xlibre-video-vesa xlibre-video-vmware xlibre-video-voodoo xlibre-xserver
-            xlibre-xserver-common xlibre-xserver-devel xlibre-xserver-xephyr xlibre-xserver-xnest
-            xlibre-xserver-xvfb xorg-xset
+            "conky xwallpaper nsxiv zenity dconf dmenu picom redshift sxhkd",
+            "ksnip clipmenu",
+            // "obs-studio",
         ),
-        // x11(obs-studio),
 
-        steam(gamemode steam),
-        anydesk(minizip lsb-release),
+        steam("gamemode steam"),
+        anydesk("minizip lsb-release"),
 
 #endif // DESKTOP_MODE
 
 #ifdef PROGRAMMER_MODE
-        c(clang gcc gdb libtool make mold valgrind tcc), // meson cmake ninja lldb
-        c3(c3c),
-        d(dmd dfmt),
-        go(go),
-        haskell(ghc),
-        js(nodejs npm),
-        lua(stylua),
-        ocaml(ocaml),
-        odin(odinfmt),
-        ruby(ruby),
-        rust(rust rust-analyzer),
-        shell(shfmt), // shellcheck
-        zig(zig zls),
-        python(
-               python imath
-               pystring python-beautifulsoup4 python-dateutil python-feedgen python-lxml
-               python-mutagen python-pytz python-six
-        ),
+        c        ("clang gcc gdb libtool make mold valgrind tcc"), // meson cmake ninja lldb
+        c3       ("c3c"),
+        d        ("dmd dfmt"),
+        elixir   ("elixir"),
+        erlang   ("erlang"),
+        go       ("go"),
+        haskell  ("ghc"),
+        java     ("openjdk"),
+        js       ("nodejs npm"),
+        kotlin   ("kotlin"),
+        lua      ("stylua"),
+        ocaml    ("ocaml"),
+        odin     ("odinfmt"),
+        python   ("python imath pystring python-beautifulsoup4 python-lxml python-six"),
+        ruby     ("ruby"),
+        rust     ("rust rust-analyzer"),
+        shell    ("shfmt"), // shellcheck
+        zig      ("zig zls"),
 #endif // PROGRAMMER_MODE
-
-        // If EMACS is defined, install the emacs package, else assumes source compiling
-#ifndef EMACS
-        "hunspell-en_us aspell-pt aspell-en hunspell libxaw libotf m17n-lib libgccjit", // global
-#else
-        "emacs hunspell-en_us aspell aspell-pt aspell-en hunspell libxaw libotf m17n-lib libgccjit", // global
-#endif
-
-#ifdef TMP
-#endif // TMP
 
         NULL,
 };
@@ -207,10 +193,9 @@ char *aur[] = {
     // "mutt-wizard",
     // "steghide",
     // "tomb",
-    hyprland(wttrbar),
-    anydesk(anydesk-bin yp-tools),
-	x11(dwm st dwm-statusbar),
-	odin(odin-git ols-git),
+    anydesk("anydesk-bin yp-tools"),
+    x11("dwm st dwm-statusbar"),
+    odin("odin-git ols-git"),
     NULL,
 };
 // clang-format on

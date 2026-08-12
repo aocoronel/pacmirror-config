@@ -59,7 +59,7 @@ int main(void) {
                 }
 
                 fprintf(output, "#ifdef %.*s\n", (int)flag_size, flag_name);
-                fprintf(output, "#define %.*s(...) #__VA_ARGS__\n", (int)flag_size, flag_name_low);
+                fprintf(output, "#define %.*s(...) __VA_ARGS__\n", (int)flag_size, flag_name_low);
                 fprintf(output, "#else\n");
                 fprintf(output, "#define %.*s(...) \"0\"\n", (int)flag_size, flag_name_low);
                 fprintf(output, "#endif\n\n");
