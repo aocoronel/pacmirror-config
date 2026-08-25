@@ -13,6 +13,7 @@
 // #define AMD
 // #define NVIDIA
 #define INTEL
+// #define VM
 
 // === Display ===
 #define X11
@@ -72,7 +73,7 @@ char *pacman[] = {
               "linux-firmware-intel",
               "intel-compute-runtime intel-gmmlib intel-ucode intel-graphics-compiler",
               "intel-media-driver vulkan-intel",
-        ),
+        )
 
         "bash", // bash-completion
         "btop zoxide", // ripgrep
@@ -135,7 +136,7 @@ char *pacman[] = {
         virtual_machine("bridge-utils dnsmasq dosfstools libvirt lxc qemu-full swtpm virt-manager virt-viewer"),
 
         wayland(
-            "fuzzel pavucontrol swayimg swaybg cliphist xdg-user-dirs ydotool foot"
+            "fuzzel pavucontrol swaybg cliphist xdg-user-dirs ydotool foot",
             // "grim satty slurp wf-recorder",
             "cpio gsettings-desktop-schemas libva-utils lm_sensors wl-clipboard wlr-randr",
         ),
@@ -143,17 +144,21 @@ char *pacman[] = {
         x11(
             "libxft xlibre-input-elographics xlibre-input-evdev xlibre-input-joystick",
             "xlibre-input-keyboard xlibre-input-libinput xlibre-input-mouse xlibre-input-synaptics",
-            "xlibre-input-vmmouse xlibre-input-void xlibre-input-wacom xlibre-video-amdgpu",
+            "xlibre-input-vmmouse xlibre-input-void xlibre-input-wacom",
             "xlibre-video-ast xlibre-video-ati xlibre-video-dummy xlibre-video-fbdev",
-            "xlibre-video-intel xlibre-video-nouveau xlibre-video-qxl xlibre-video-sisusb",
+            "xlibre-video-sisusb xlibre-xserver-xvfb",
             "xlibre-video-vesa xlibre-video-vmware xlibre-video-voodoo xlibre-xserver",
             "xlibre-xserver-common xlibre-xserver-devel xlibre-xserver-xephyr xlibre-xserver-xnest",
-            "xlibre-xserver-xvfb xorg-xset xorg-xinit xorg-xrandr xsel xclip xdotool",
+            "xorg-xset xorg-xinit xorg-xrandr xsel xclip xdotool",
 
-            "conky xwallpaper nsxiv zenity dconf dmenu picom redshift sxhkd",
+            "conky xwallpaper zenity dconf dmenu picom redshift sxhkd",
             "ksnip clipmenu",
             // "obs-studio",
-        ),
+			nvidia("xlibre-video-nouveau"),
+			intel("xlibre-video-intel"),
+			amd("xlibre-video-amdgpu"),
+			vm("xlibre-video-qxl"),
+        )
 
         steam("gamemode steam"),
         anydesk("minizip lsb-release"),
