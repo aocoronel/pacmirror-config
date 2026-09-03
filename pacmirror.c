@@ -77,12 +77,14 @@ char *pacman[] = {
 
         "bash", // bash-completion
         "btop zoxide", // ripgrep
-        "curl ffmpeg imagemagick openssh openssl sqlite ueberzugpp", // jq
+        "curl imagemagick openssh openssl sqlite ueberzugpp", // jq
+        "ffmpeg sox",
         "fastfetch",
         "fzf direnv",
         "git gnupg", // gitleaks git-filter-repo
         "libpulse pipewire pipewire-alsa pipewire-audio pipewire-jack pipewire-pulse gst-plugin-pipewire wireplumber",
         "mandoc man-pages",
+        "ledger",
         "mpv",
         "neovim",
         "opusfile libmad libvorbis wavpack",
@@ -95,6 +97,9 @@ char *pacman[] = {
         "ufw",
         "wpa_supplicant networkmanager",
         "zsh",
+        "fuse2",
+        "isync",
+        "github-cli",
         // "android-tools gvfs gvfs-mtp mtpfs",
         // "bat eza fd sd",
         // "bluez bluez-utils",
@@ -141,26 +146,17 @@ char *pacman[] = {
             "cpio gsettings-desktop-schemas libva-utils lm_sensors wl-clipboard wlr-randr",
         ),
 
-        x11(
-            "libxft xlibre-input-elographics xlibre-input-evdev xlibre-input-joystick",
-            "xlibre-input-keyboard xlibre-input-libinput xlibre-input-mouse xlibre-input-synaptics",
-            "xlibre-input-vmmouse xlibre-input-void xlibre-input-wacom",
-            "xlibre-video-ast xlibre-video-ati xlibre-video-dummy xlibre-video-fbdev",
-            "xlibre-video-sisusb xlibre-xserver-xvfb",
-            "xlibre-video-vesa xlibre-video-vmware xlibre-video-voodoo xlibre-xserver",
-            "xlibre-xserver-common xlibre-xserver-devel xlibre-xserver-xephyr xlibre-xserver-xnest",
-            "xorg-xset xorg-xinit xorg-xrandr xsel xclip xdotool",
+        x11("xorg-server xorg-server-common xorg-server-xephyr xorg-server-xnest xorg-server-xvfb xorg-server-devel",
+            "libxft xorg-xset xorg-xinit xorg-xrandr xsel xclip xdotool",
 
             "conky xwallpaper zenity dconf dmenu picom redshift sxhkd",
             "ksnip clipmenu",
             // "obs-studio",
-			nvidia("xlibre-video-nouveau"),
-			intel("xlibre-video-intel"),
-			amd("xlibre-video-amdgpu"),
-			vm("xlibre-video-qxl"),
         )
 
-        steam("gamemode steam"),
+        steam(
+           "gamemode steam",
+        ),
         anydesk("minizip lsb-release"),
 
 #endif // DESKTOP_MODE
@@ -201,6 +197,7 @@ char *aur[] = {
     anydesk("anydesk-bin yp-tools"),
     x11("dwm st dwm-statusbar"),
     odin("odin-git ols-git"),
+    "mu",
     NULL,
 };
 // clang-format on
