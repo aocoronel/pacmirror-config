@@ -97,9 +97,9 @@ int compile_file(char *file, char **flags, int type) {
 
     bool needs_compilation = false;
 
-	if (type == NONE) return 0;
+    if (type == NONE) return 0;
 
-	needs_compilation = needs_build(file, output_file);
+    needs_compilation = needs_build(file, output_file);
     if (!needs_compilation) return 0;
 
     push("gcc");
@@ -172,8 +172,8 @@ char **get_flags(char *file, int *type) {
 
 int compile(char *file) {
     int type = NONE;
-	char **flags = NULL;
-	flags = get_flags(file, &type);
+    char **flags = NULL;
+    flags = get_flags(file, &type);
     return compile_file(file, flags, type);
 }
 
@@ -203,6 +203,6 @@ void compile_all(void) {
 
 int main(void) {
     compile("flag_generator.c");
-    compile("pacmirror.c");
+    compile("dpacker.c");
     return 0;
 }

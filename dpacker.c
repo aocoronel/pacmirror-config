@@ -51,7 +51,8 @@
 #define DESKTOP_MODE
 
 #include "flags.h"
-#include "pacmirror.h"
+#include "dpacker.h"
+#include "alpm.h"
 
 // clang-format off
 char *pacman[] = {
@@ -150,7 +151,7 @@ char *pacman[] = {
             "libxft xorg-xset xorg-xinit xorg-xrandr xsel xclip xdotool",
 
             "conky xwallpaper zenity dconf dmenu picom redshift sxhkd",
-            "ksnip clipmenu",
+            "ksnip",
             // "obs-studio",
         )
 
@@ -203,5 +204,9 @@ char *aur[] = {
 // clang-format on
 
 int main(int argc, char **argv) {
-    return pacmirror(pacman, aur, argc, argv);
+	DPacker_Interface interface;
+	interface.init = dpacker_alpm_init;
+	interface.collect = dpacker_alpm_collect;
+	interface.sync = dpacker_alpm_sync;
+    return dpacker(interface, pacman, aur, argc, argv);
 }
