@@ -204,9 +204,8 @@ char *aur[] = {
 // clang-format on
 
 int main(int argc, char **argv) {
-	DPacker_Interface interface;
-	interface.init = dpacker_alpm_init;
-	interface.collect = dpacker_alpm_collect;
-	interface.sync = dpacker_alpm_sync;
+    DPacker_Interface interface;
+    interface.init = dpacker_alpm_init;
+    interface.collect = dpacker_alpm_collect;
     return dpacker(interface, pacman, aur, argc, argv);
 }
