@@ -1,14 +1,14 @@
 # Maintainer: Augusto Coronel <aocoronel@proton.me>
 
 pkgname=odin-git
-pkgver=dev_2026_08
+pkgver=dev_2026_09
 pkgrel=1
 pkgdesc='Data-oriented programming language'
 arch=(x86_64)
 url='https://odin-lang.org/'
 license=(BSD-3-Clause)
-depends=(clang llvm21-libs python)
-makedepends=(git llvm21 stb)
+depends=(clang llvm22-libs python)
+makedepends=(git llvm22 stb)
 checkdepends=(mbedtls)
 options=(staticlibs)
 source=("https://github.com/odin-lang/Odin/archive/refs/tags/${pkgver//_/-}.tar.gz")

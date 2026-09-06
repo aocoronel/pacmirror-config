@@ -150,7 +150,7 @@ char *pacman[] = {
         x11("xorg-server xorg-server-common xorg-server-xephyr xorg-server-xnest xorg-server-xvfb xorg-server-devel",
             "libxft xorg-xset xorg-xinit xorg-xrandr xsel xclip xdotool",
 
-            "conky xwallpaper zenity dconf dmenu picom redshift sxhkd",
+            "conky xwallpaper zenity dconf dmenu redshift sxhkd", // picom
             "ksnip",
             // "obs-studio",
         )
@@ -199,6 +199,7 @@ char *aur[] = {
     x11("dwm st dwm-statusbar"),
     odin("odin-git ols-git"),
     "mu",
+    x11("zoomer"),
     NULL,
 };
 // clang-format on

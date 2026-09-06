@@ -1,0 +1,21 @@
+# Maintainer: Augusto Coronel <aocoronel@proton.me>
+
+pkgname=zoomer
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="A screenshot and zoom-in tool inspired by Tsoding's 'boomer'"
+url='https://github.com/cristeigabriela/zoomer'
+arch=('x86_64')
+license=('Unknown') # Possibly public-domain?
+depends=('sdl2')
+makedepends=('gcc')
+source=('./main.c')
+sha256sums=('SKIP')
+
+build() {
+  gcc main.c -lSDL2 -lX11 -lm -Wall -Wextra -Wpedantic -O3 -o zoomer
+}
+
+package() {
+  install -D zoomer "$pkgdir/usr/bin/zoomer"
+}
